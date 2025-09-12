@@ -14,7 +14,7 @@ table {margin: 20px auto; border-collapse: collapse; width: 80%;}
 th, td {border: 1px solid rgb(0, 9, 81); padding: 5px 10px; text-align: center;}
 
 /*<body class="background">, растягиваем на весь экран, flexbox режим, выравнивание вертикаль, горизонталь*/
-body.background {min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; background: url("images/background.png") center/cover no-repeat; padding: 20px;}
+body.background {min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; background: url("background.png") center/cover no-repeat; padding: 20px;}
 /*<main class="center">*/
 .center {display: flex; justify-content: center; align-items: center; width: 100%;}
 /*<form class="card">*/
@@ -36,4 +36,5 @@ body.background {min-height: 100vh; margin: 0; display: flex; align-items: cente
 .loginlink{display: block; width: max-content; margin: 8px auto 0; line-height: 0; padding: 0;}
 
 .loginpic{display: block; width: 64px; height: 64px;object-fit: contain; cursor: pointer; transition: transform .2s;}
+
 .loginpic:hover{ transform: scale(1.08); }
