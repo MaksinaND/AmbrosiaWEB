@@ -9,17 +9,6 @@
     <title>Вход на Олимп</title>
     <link rel="stylesheet" href="style.css">
 </head>
-    <body 
-  style="
-    background: url('background.png') center/cover no-repeat;
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  "
->
 <body class="background">
   <main class="center">
     <form class="card" action="https://httpbin.org/post" method="POST" autocomplete="on">
@@ -33,9 +22,10 @@
         <input name="password" type="password" required minlength="4">
       </label>
 
-      <label class="remember">
-        <input name="remember" type="checkbox"> Запомнить меня
-      </label>
+<label class="remember">
+  <input type="checkbox" name="remember">
+  Запомнить меня
+</label>
 
       <button type="submit">Войти</button>
     </form>
