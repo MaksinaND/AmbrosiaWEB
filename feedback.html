@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Глас Олимпу</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="background">
+  <main class="center">
+    <form class="card" action="https://httpbin.org/post" method="POST" enctype="multipart/form-data" autocomplete="on">
+      <h1>Глас Олимпу</h1>
+
+      <label>ФИО
+        <input name="fullname" type="text" required>
+      </label>
+
+      <label>Email
+        <input name="email" type="email" required>
+      </label>
+
+      <fieldset class="fieldset">
+        <legend>Откуда узнали о нас?</legend>
+        <label><input type="radio" name="source" value="friends" required> Друзья</label>
+        <label><input type="radio" name="source" value="internet"> Интернет</label>
+        <label><input type="radio" name="source" value="ads"> Реклама</label>
+      </fieldset>
+
+      <label>Тип обращения
+        <select name="type" required>
+          <option value="complaint">Жалоба</option>
+          <option value="suggestion">Предложение</option>
+        </select>
+      </label>
+
+      <label>Текст сообщения
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+
+      <label>Вложения
+        <input type="file" name="attachment">
+      </label>
+
+      <label class="remember">
+        <input type="checkbox" name="consent" required>
+        Даю согласие на обработку персональных данных
+      </label>
+
+      <button type="submit">Отправить</button>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,95 +1,77 @@
 <!DOCTYPE HTML>
 <html lang="ru">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Forum&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-        <title>Ambrosia</title> <!--Название страницы в браузере-->
-    </head>
-    <body>
-        <header> <!--В заголовке будет название, навигация, логотип и надпись про бизнес-ланчи-->
-            <h1>Ambrosia - доставка бизнес-ланчей в Москве</h1> <!--Сделать по центре и синим цветом-->
-            <nav> <!--Тут наша навигация через a - anchor, якорь (это теги, по которым кликают)-->
-                <a href="https://www.example.com/?page=about">Главная страница</a> <!--index.html-->
-                <a href="https://www.example.com/?page=about">История Амбросии</a> <!--history.html-->
-                <a href="https://www.example.com/?page=about">Собрать трапезу</a> <!--menu.html-->
-                <a href="https://www.example.com/?page=about">Свиток заказов</a> <!--orders.html-->
-                <a href="#contacts">Контакты Олимпа</a> <!--contacts.html-->
-                <a href="login.html" class="loginlink">
-                    <img src="login.png" alt="Войти" class="loginpic">
-                </a>
-            </nav>
-            <img src="logo.png" alt="Логотип">
-        </header>
-        <main>
-            <section>
-                <h2>Амбросия сегодня</h2>
-                <p>Наш сервис предлагает тематические ланчи, вдохновлённые мифами Древней Греции - выбор тех, кто считает, что такой важный приём пищи не должен быть скучным. Мы доставляем по всей Москве - менее чем за час Вы получите свой заказ. <strong>Гарантируем</strong>: будет вкусно и необычно!</p>
-            </section>
-            <section>
-                <h2>Что делает нас особенными?</h2>
-                <ul>
-                    <li><strong>Творческий подход</strong>. Мы не просто даём блюдам необычные названия, но и продумываем рецепты и начинку, чтобы каждое блюдо было связано с определённым мифом.</li>
-                    <li><strong>Коллекционные карточки</strong>. К каждому заказу прилагается карточка с героями мифов Древней Греции — более 100 вариантов, соберите их все!</li>
-                    <li><strong>Пунктуальность</strong>. Мы понимаем, что обеденный перерыв короткий, поэтому доставляем заказ к точно указанному времени — чтобы Вы успели насладиться трапезой.</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Лучшее с Олимпа: популярно у наших клиентов</h2>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>№</th> <!--table data - ячейки для информации-->
-                        <th>Блюдо</th>
-                        <th>Категория</th>
-                        <th>Цена</th>
-                    </tr> <!--table row - строки-->
-                    </thead>
-                    <tbody> <!--Отделим горячее-->
-                    <tr>
-                        <td>1</td>
-                        <td>Нить Ариадны</td> <!--Спагетти-->
-                        <td>Горячее</td>
-                        <td>285 рублей</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Амброзия</td> <!--Ячменная каша-->
-                        <td>Горячее</td>
-                        <td>330 рублей</td>
-                    </tr>
-                    </tbody>
-                    <tbody> <!--Отделим закуски-->
-                    <tr>
-                        <td>3</td>
-                        <td>Чары Афродиты</td> <!--Салат с креветками и клубникой-->
-                        <td>Закуски</td>
-                        <td>250 рублей</td>
-                    </tr>
-                    </tbody>
-                    <tbody> <!--Отделим десерты-->
-                    <tr>
-                        <td>4</td>
-                        <td>Нектар Диониса</td> <!--Панна-Котта-->
-                        <td>Десерты</td>
-                        <td>230 рублей</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Сон Морфея</td> <!--Наполеон-->
-                        <td>Десерты</td>
-                        <td>200 рублей</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
-        <footer id = "contacts">
-            <p>Олимп на связи: <a href="tel:+79152198937">7-915-123-45-67</a></p>
-        </footer>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Ambrosia</title>
+</head>
+<body>
+  <header>
+    <h1>Ambrosia - доставка бизнес-ланчей в Москве</h1>
+    <nav>
+      <a href="https://www.example.com/?page=about">Главная страница</a>
+      <a href="https://www.example.com/?page=about">История Амбросии</a>
+      <a href="https://www.example.com/?page=about">Собрать трапезу</a>
+      <a href="https://www.example.com/?page=about">Свиток заказов</a>
+      <a href="#contacts">Контакты Олимпа</a>
+      <a href="login.html" class="loginlink">
+        <img src="login.png" alt="Войти" class="loginpic">
+      </a>
+    </nav>
+    <img src="logo.png" alt="Логотип" class="logo">
+  </header>
 
+  <main>
+    <section>
+      <h2>Амбросия сегодня</h2>
+      <p>Наш сервис предлагает тематические ланчи, вдохновлённые мифами Древней Греции - выбор тех, кто считает, что такой важный приём пищи не должен быть скучным. Мы доставляем по всей Москве - менее чем за час Вы получите свой заказ. <strong>Гарантируем</strong>: будет вкусно и необычно!</p>
+    </section>
+
+    <section>
+      <h2>Что делает нас особенными?</h2>
+      <ul>
+        <li><strong>Творческий подход</strong>. Мы не просто даём блюдам необычные названия, но и продумываем рецепты и начинку, чтобы каждое блюдо было связано с определённым мифом.</li>
+        <li><strong>Коллекционные карточки</strong>. К каждому заказу прилагается карточка с героями мифов Древней Греции — более 100 вариантов, соберите их все!</li>
+        <li><strong>Пунктуальность</strong>. Мы понимаем, что обеденный перерыв короткий, поэтому доставляем заказ к точно указанному времени — чтобы Вы успели насладиться трапезой.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Лучшее с Олимпа: популярно у наших клиентов</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Блюдо</th>
+            <th>Категория</th>
+            <th>Цена</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Нить Ариадны</td><td>Горячее</td><td>285 рублей</td></tr>
+          <tr><td>2</td><td>Амброзия</td><td>Горячее</td><td>330 рублей</td></tr>
+        </tbody>
+        <tbody>
+          <tr><td>3</td><td>Чары Афродиты</td><td>Закуски</td><td>250 рублей</td></tr>
+        </tbody>
+        <tbody>
+          <tr><td>4</td><td>Нектар Диониса</td><td>Десерты</td><td>230 рублей</td></tr>
+          <tr><td>5</td><td>Сон Морфея</td><td>Десерты</td><td>200 рублей</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer id="contacts">
+    <div class="footer-inner">
+      <p class="footer-title">Олимп на связи:</p>
+      <a class="footer-phone" href="tel:+79152198937">7-915-123-45-67</a>
+      <a class="footer-cta" href="feedback.html" title="Написать нам">Оставить глас Олимпу</a>
+    </div>
+  </footer>
+</body>
 </html>

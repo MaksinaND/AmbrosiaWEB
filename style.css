@@ -1,52 +1,237 @@
+/* ---------- базовые ---------- */
 * {font-family:"Forum",serif;}
 * {margin:0; padding:0; box-sizing:border-box;}
-nav {margin: 0; padding: 0; text-align: center;}
-nav a {margin: 10px 0px 0px 10px; text-decoration: none; color: goldenrod; font-size: 150%}
-nav a:hover {text-decoration: underline; color:cadetblue}
-header h1 {text-align: center; color: rebeccapurple; font-size: 200%; margin: 10px 0 20px 0;}
-header img {display: block; margin: 5px auto 5px; max-width: 80%;height: auto;}
-body h2 {text-align: center; color: rgb(40, 24, 223); font-size: 150%; margin: 10px 0 5px 0;}
-main {max-width: 85%; margin: 0 auto; font-size: 120%;} 
-footer {background-color: black; color: white; padding: 10px 10px; margin-top: 20px;}
-footer a {color: white; text-decoration: none;}
-footer a:hover {text-decoration: underline; color:cadetblue}
+nav {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+nav a {
+  text-decoration: none;
+  color: goldenrod;
+  font-size: 150%;
+}
+nav a:hover {text-decoration: underline; color: cadetblue}
+
+header h1 {
+  text-align: center;
+  color: rebeccapurple;
+  font-size: 200%;
+  margin: 10px 0 20px 0;
+}
+
+.logo {
+  display: block;
+  margin: 20px auto;
+  max-width: 80%;
+  height: auto;
+}
+
+body h2 {
+  text-align: center;
+  color: rgb(40, 24, 223);
+  font-size: 150%;
+  margin: 10px 0 5px 0;
+}
+main {max-width: 85%; margin: 0 auto; font-size: 120%;}
 table {margin: 20px auto; border-collapse: collapse; width: 80%;}
 th, td {border: 1px solid rgb(0, 9, 81); padding: 5px 10px; text-align: center;}
 
-/*<body class="background">, растягиваем на весь экран, flexbox режим, выравнивание вертикаль, горизонталь*/
-body.background {min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; background: url("images/background.png") center/cover no-repeat; padding: 20px;}
-/*<main class="center">*/
+/* фон */
+body.background {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("background.png") center/cover no-repeat;
+  background-attachment: fixed;
+  padding: 20px;
+}
 .center {display: flex; justify-content: center; align-items: center; width: 100%;}
-/*<form class="card">*/
-.card {background-color: #3e4a52; /*фон формы*/ border: 6px solid #2ea369; /*рамка*/ border-radius: 20px; /*скругленная рамка*/ padding: 25px 30px; max-width: 400px; width: 100%; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 16px;}
-.card h1 {text-align: center; color: #bb8dff; font-size: 2.2rem; margin-bottom: 10px;}
-.card label {color: white; font-size: 1.1rem; display: flex; flex-direction: column; gap: 4px;
+
+/* карточки форм */
+.card {
+  background-color: #3e4a52;
+  border: 6px solid #2ea369;
+  border-radius: 20px;
+  padding: 25px 30px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 8px 16px rgba(0,0,0,.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card h1 {
+  text-align: center;
+  color: #bb8dff;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+.card label {
+  color: #fff;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.card input[type="text"],.card input[type="password"] {width: 100%; padding: 10px 12px; background-color: #aeb5c7; border: none; border-radius: 8px; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.2); font-size: 1rem;}
+.card input[type="text"],
+.card input[type="password"],
+.card input[type="email"],
+.card input[type="file"],
+.card select,
+.card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #aeb5c7;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.2);
+}
 
-.card button {width: 100%; padding: 12px; border: none; border-radius: 10px; background-color: #e9eefb; color: #1e2a44; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3); transition: transform 0.1s ease;}
-
-.card button:hover {transform: translateY(-2px);}
-
-.card button:active {transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);}
-
-.loginlink{display: block; width: max-content; margin: 8px auto 0; line-height: 0; padding: 0;}
-
-.loginpic{display: block; width: 64px; height: 64px;object-fit: contain; cursor: pointer; transition: transform .2s;}
-.loginpic:hover{ transform: scale(1.08); }
-
+/* чекбоксы */
 .card label.remember {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    font-size: 1rem;
-    color: white;
-    margin-right: 5px;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #fff;
+  margin-right: 5px;
+}
+.card label.remember input[type="checkbox"] {
+  margin: 0;
+  vertical-align: middle;
 }
 
-.card label.remember input[type="checkbox"] {
-    margin: 0;
-    vertical-align: middle;
+/* радио */
+.card fieldset {
+  border: 2px solid #2ea369;
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card fieldset legend {
+  font-size: 1.2rem;
+  color: #bb8dff;
+  padding: 0 6px;
+}
+.card fieldset label {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+.card fieldset input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #bb8dff;
+}
+
+/* кнопки */
+.card button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, goldenrod, #bb8dff);
+  color: #1e2a44;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,.3);
+  transition: transform .1s ease, background .3s ease, color .3s ease;
+}
+.card button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, cadetblue, #2ea369);
+  color: #fff;
+}
+.card button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0,0,0,.3);
+}
+
+/* иконка входа */
+.loginlink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginpic {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.loginpic:hover { transform: scale(1.1); }
+
+/* футер */
+footer {
+  background-color: #000;
+  color: #fff;
+  padding: 14px 0;
+  margin-top: 24px;
+  border-top: 3px solid #2ea369;
+}
+footer a { color: #fff; text-decoration: none; }
+
+.footer-inner {
+  max-width: 85%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 24px;
+  line-height: 1.3;
+}
+.footer-title {margin: 0;}
+.footer-phone {
+  color: #fff;
+  padding: 4px 10px;
+  border: 1px solid #2ea369;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.footer-cta {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, goldenrod, #bb8dff);
+  color: #1e2a44;
+  font-weight: 700;
+  transition: transform .1s ease, background .3s ease, color .3s ease;
+  box-shadow: 0 2px 0 rgba(0,0,0,.3);
+}
+.footer-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, cadetblue, #2ea369);
+  color: #fff;
+}
+.footer-cta:active { transform: translateY(2px); }
+
+@media (max-width: 600px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .footer-cta {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }
