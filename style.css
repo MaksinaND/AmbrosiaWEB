@@ -235,3 +235,144 @@ footer a { color: #fff; text-decoration: none; }
     text-align: center;
   }
 }
+
+/* ===== lunch: фон и белая навигация только на этой странице ===== */
+body.lunch-bg {
+  min-height: 100vh;
+  margin: 0;
+  background: url("yellowback.png") center/cover no-repeat fixed;
+  padding: 20px 0 40px;
+}
+body.lunch-bg nav a {
+  color: #fff; 
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: 600;
+  transition: color .2s ease;
+}
+body.lunch-bg nav a:hover { color: #bb8dff; }
+
+/* ===== layout меню ===== */
+.max { max-width: 1200px; margin: 0 auto; }
+.menu-section { margin: 22px auto; max-width: 1200px; }
+.menu-section h3 {
+  text-align: left;
+  color: rebeccapurple;
+  font-size: 1.4rem;
+  margin: 8px 0 10px;
+  padding-left: 4px;
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+}
+@media (max-width: 1000px) { .menu-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .menu-grid { grid-template-columns: 1fr; } }
+
+/*для лабы 3*/
+.plate-card {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  align-items: center;
+  background-color: #3e4a52;
+  border: 4px solid #2ea369;
+  border-radius: 16px;
+  padding: 10px 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.35);
+  cursor: pointer;
+  transition: transform .1s ease, box-shadow .2s ease, border-color .2s ease;
+  user-select: none;
+  position: relative;
+}
+.plate-card:hover { transform: translateY(-2px); box-shadow: 0 10px 16px rgba(0,0,0,.4); border-color: #bb8dff; }
+.plate-card input { position: absolute; opacity: 0; }
+
+.plate-img { width: 110px; height: 90px; object-fit: cover; border-radius: 12px; }
+.plate-info { display: grid; gap: 2px; }
+.plate-title { font-weight: 700; font-size: 1.1rem; color: #bb8dff; }
+body.lunch-bg .plate-check input:checked ~ .plate-info .plate-title { color: #bb8dff; }
+
+.plate-desc  { font-size: .95rem; color: #ddd; opacity: .9; }
+.plate-price { font-weight: 700; color: goldenrod; margin-top: 4px; }
+
+.checkout { margin-top: 28px; }
+.checkout-title { text-align: center; color: rebeccapurple; margin-bottom: 16px; }
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) { .checkout-grid { grid-template-columns: 1fr; } }
+
+.summary {
+  background: rgba(62,74,82,.9);
+  border: 6px solid #2ea369;
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow: 0 8px 16px rgba(0,0,0,.5);
+  color: #fff;
+}
+.summary h4 { font-size: 1.4rem; color: #bb8dff; margin-bottom: 10px; }
+.summary-block { margin: 10px 0 14px; }
+.summary-cat { font-weight: 700; margin-bottom: 4px; }
+.summary-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.summary-list li.empty { opacity: .7; }
+.summary-total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 1.2rem; margin-top: 8px; padding-top: 10px; border-top: 2px solid #2ea369;
+}
+.price-highlight { color: goldenrod; font-weight: 700; } 
+
+body.lunch-bg .summary-total strong,
+body.lunch-bg .total-row strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.delivery-note { color: #fff; opacity: .8; font-size: .95rem; margin: 6px 0 8px; }
+
+body.lunch-bg fieldset { margin: 10px 0; padding: 10px 14px 12px; }
+body.lunch-bg fieldset legend { margin-bottom: 6px; }
+
+body.lunch-bg header {
+  background: #fff;
+  padding: 10px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+body.lunch-bg nav { display: flex; justify-content: center; flex-wrap: wrap; }
+body.lunch-bg nav a {
+  color: #333; margin: 0 12px; font-weight: 600; text-decoration: none; transition: color 0.2s ease;
+}
+body.lunch-bg nav a:hover { color: rebeccapurple; }
+body.lunch-bg nav .loginpic { height: 28px; width: auto; vertical-align: middle; }
+
+body.lunch-bg {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: url("yellowback.png") center/cover no-repeat fixed;
+}
+body.lunch-bg main { flex: 1; }
+body.lunch-bg .max { padding: 20px 0 24px; }
+body.lunch-bg footer { margin: 0; width: 100%; }
+
+body.lunch-bg fieldset {
+  margin: 10px 0;
+  padding: 8px 14px 10px;
+  border: 2px solid #2ea369;
+  border-radius: 8px;
+}
+
+body.lunch-bg fieldset legend {
+  margin-bottom: 4px;
+  color: rgb(162, 105, 219);
+}
+
+body.lunch-bg fieldset label {
+  display: block;
+  margin: 4px 0;
+}
