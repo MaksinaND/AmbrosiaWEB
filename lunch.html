@@ -11,11 +11,12 @@
 </head>
 <body class="lunch-bg">
   <header>
+    <h1>Ambrosia - доставка бизнес-ланчей в Москве</h1>
     <nav>
       <a href="index.html">Главная страница</a>
-      <a href="about.html">История Амбросии</a>
+      <a href="https://www.example.com/?page=about">История Амбросии</a>
       <a href="lunch.html">Собрать трапезу</a>
-      <a href="orders.html">Свиток заказов</a>
+      <a href="https://www.example.com/?page=about">Свиток заказов</a>
       <a href="#contacts">Контакты Олимпа</a>
       <a href="login.html" class="loginlink">
         <img src="login.png" alt="Войти" class="loginpic">
@@ -24,21 +25,21 @@
   </header>
 
   <main class="max">
-
+    <!-- МЕНЮ -->
     <section class="menu-section">
       <h3>Горячее</h3>
       <div class="menu-grid">
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="hot" value="Нить Ариадны" data-price="285">
           <img src="ariadna.jpg" alt="Нить Ариадны" class="plate-img">
           <div class="plate-info">
             <p class="plate-title">Нить Ариадны</p>
-            <p class="plate-desc">Паста в нежном томатно-сливочном соусе </p>
+            <p class="plate-desc">Паста в нежном томатно-сливочном соусе</p>
             <p class="plate-price">285 ₽</p>
           </div>
         </label>
 
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="hot" value="Амброзия" data-price="330">
           <img src="ambrosia.jpg" alt="Амброзия" class="plate-img">
           <div class="plate-info">
@@ -48,7 +49,7 @@
           </div>
         </label>
 
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="hot" value="Щит Ареса" data-price="320">
           <img src="ares.jpg" alt="Щит Ареса" class="plate-img">
           <div class="plate-info">
@@ -60,11 +61,10 @@
       </div>
     </section>
 
-
     <section class="menu-section">
       <h3>Закуски</h3>
       <div class="menu-grid">
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="snack" value="Чары Афродиты" data-price="250">
           <img src="afrodita.jpg" alt="Чары Афродиты" class="plate-img">
           <div class="plate-info">
@@ -74,7 +74,7 @@
           </div>
         </label>
 
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="snack" value="Слёзы Геры" data-price="240">
           <img src="geratears.jpg" alt="Слёзы Геры" class="plate-img">
           <div class="plate-info">
@@ -87,9 +87,9 @@
     </section>
 
     <section class="menu-section">
-      <h3>Десерты</h3>
+      <h3>Десерт</h3>
       <div class="menu-grid">
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="dessert" value="Нектар Диониса" data-price="230">
           <img src="dionis.jpg" alt="Нектар Диониса" class="plate-img">
           <div class="plate-info">
@@ -99,7 +99,7 @@
           </div>
         </label>
 
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="dessert" value="Сон Морфея" data-price="200">
           <img src="morpheus.jpg" alt="Сон Морфея" class="plate-img">
           <div class="plate-info">
@@ -111,11 +111,10 @@
       </div>
     </section>
 
-
     <section class="menu-section">
       <h3>Напитки</h3>
       <div class="menu-grid">
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="drink" value="Кубок Прометея" data-price="150">
           <img src="prometheus.jpg" alt="Кубок Прометея" class="plate-img">
           <div class="plate-info">
@@ -125,7 +124,7 @@
           </div>
         </label>
 
-        <label class="plate-card plate-check">
+        <label class="plate-card">
           <input type="checkbox" name="drink" value="Река Стикс" data-price="120">
           <img src="styx.jpg" alt="Река Стикс" class="plate-img">
           <div class="plate-info">
@@ -137,52 +136,65 @@
       </div>
     </section>
 
-
+    <!-- ФОРМА -->
     <section class="checkout">
       <h2 class="checkout-title">Сделать заказ</h2>
 
-      <div class="checkout-grid">
+      <form class="checkout-grid"
+            action="https://httpbin.org/post"
+            method="POST"
+            autocomplete="on"
+            accept-charset="UTF-8">
 
-        <aside class="summary">
-          <h4>Ваш заказ</h4>
-
-          <div class="summary-block" id="sum-hot">
-            <p class="summary-cat">Горячее</p>
-            <ul class="summary-list"><li class="empty">— не выбрано</li></ul>
-          </div>
-
-          <div class="summary-block" id="sum-snack">
-            <p class="summary-cat">Закуски</p>
-            <ul class="summary-list"><li class="empty">— не выбрано</li></ul>
-          </div>
-
-          <div class="summary-block" id="sum-dessert">
-            <p class="summary-cat">Десерты</p>
-            <ul class="summary-list"><li class="empty">— не выбрано</li></ul>
-          </div>
-
-          <div class="summary-block" id="sum-drink">
-            <p class="summary-cat">Напитки</p>
-            <ul class="summary-list"><li class="empty">— не выбрано</li></ul>
-          </div>
-
-          <div class="summary-total">
-            <span>Стоимость заказа</span>
-            <strong id="summary-total">0 ₽</strong>
-          </div>
-        </aside>
-
-
-        <form class="card order-card" action="https://postman-echo.com/post" method="post">
-          <h1>Оформить заказ</h1>
+        <!-- ЛЕВАЯ КОЛОНКА — привязанные к меню селекты -->
+        <fieldset class="card">
+          <h4 style="margin:0 0 10px;color:var(--brand-accent)">Ваш заказ</h4>
 
           <label>
-            Имя:
+            Горячее
+            <select id="sel-hot" name="hot" required>
+              <option value="" selected>-- Выберите горячее --</option>
+            </select>
+          </label>
+
+          <label>
+            Закуски
+            <select id="sel-snack" name="snack" required>
+              <option value="" selected>-- Выберите закуску --</option>
+            </select>
+          </label>
+
+          <label>
+            Напитки
+            <select id="sel-drink" name="drink" required>
+              <option value="" selected>-- Выберите напиток --</option>
+            </select>
+          </label>
+
+          <label>
+            Десерт
+            <select id="sel-dessert" name="dessert" required>
+              <option value="" selected>-- Выберите десерт --</option>
+            </select>
+          </label>
+
+          <label>
+            Комментарии к заказу
+            <textarea name="comment" rows="4" placeholder="Пожелания по времени, без лука и т. п."></textarea>
+          </label>
+        </fieldset>
+
+        <!-- ПРАВАЯ КОЛОНКА — данные -->
+        <fieldset class="card">
+          <h4 style="margin:0 0 10px;color:var(--brand-accent)">Ваши данные</h4>
+
+          <label>
+            Имя
             <input type="text" name="username" required>
           </label>
 
           <label>
-            Email:
+            Email
             <input type="email" name="email" placeholder="email@example.com">
           </label>
 
@@ -192,86 +204,99 @@
           </label>
 
           <label>
-            Номер телефона:
+            Номер телефона
             <input type="tel" name="phone" placeholder="+7 xxx xxx-xx-xx"
                    pattern="^\+?7\s?\d{3}\s?\d{3}-?\d{2}-?\d{2}$" required>
           </label>
 
           <label>
-            Адрес доставки:
+            Адрес доставки
             <input type="text" name="address" placeholder="Улица, дом, квартира">
           </label>
 
-          <p class="delivery-note">Доставка осуществляется только по Москве</p>
+          <p class="delivery-note" style="margin:0 0 8px;opacity:.9">
+            Доставка осуществляется только по Москве
+          </p>
 
-<fieldset>
-  <legend>Время доставки:</legend>
-  <label><input type="radio" name="when" value="asap" checked> Как можно скорее</label>
-  <label><input type="radio" name="when" value="scheduled"> К указанному времени</label>
-</fieldset>
-
+          <fieldset>
+            <legend>Время доставки:</legend>
+            <label><input type="radio" name="when" value="asap" checked> Как можно скорее</label>
+            <label><input type="radio" name="when" value="scheduled"> К указанному времени</label>
+          </fieldset>
 
           <label>
-            Комментарий к заказу:
-            <textarea name="comment" rows="3" placeholder="Пожелания по времени, без лука и т. п."></textarea>
+            Укажите время доставки
+            <input id="deliver_at" type="time" name="deliver_at" min="07:00" max="23:00" step="300" disabled>
           </label>
+          <p style="margin:4px 0 0;opacity:.85">Доступное время доставки с 7:00 до 23:00</p>
 
-          <div class="total-row">
-            <span>Итого:</span>
-            <strong id="order-total">0 ₽</strong>
+          <div style="display:flex; gap:10px; margin-top:12px;">
+            <button type="reset">Сбросить</button>
+            <button type="submit">Отправить</button>
           </div>
-
-          <button type="submit">Оформить</button>
-        </form>
-      </div>
+        </fieldset>
+      </form>
     </section>
   </main>
 
-
-<footer id="contacts">
-  <div class="footer-inner">
-    <p class="footer-title">Олимп на связи:</p>
-    <a class="footer-phone" href="tel:+79152198937">7-915-123-45-67</a>
-    <a class="footer-cta" href="feedback.html" title="Написать нам">Оставить глас Олимпу</a>
-  </div>
-</footer>
+  <footer id="contacts">
+    <div class="footer-inner">
+      <p class="footer-title">Олимп на связи:</p>
+      <a class="footer-phone" href="tel:+79152198937">7-915-123-45-67</a>
+      <a class="footer-cta" href="feedback.html" title="Написать нам">Оставить глас Олимпу</a>
+    </div>
+  </footer>
 
   <script>
-    function money(n){ return (Number(n)||0) + ' ₽'; }
+    // Поле времени: активно только при "К указанному времени"
+    const radios = document.querySelectorAll('input[name="when"]');
+    const timeInput = document.getElementById('deliver_at');
+    function toggleTime(){ timeInput.disabled = !document.querySelector('input[name="when"][value="scheduled"]').checked; }
+    radios.forEach(r => r.addEventListener('change', toggleTime)); toggleTime();
 
-    const cats = {
-      hot:     { selector: 'input[name="hot"]:checked' },
-      snack:   { selector: 'input[name="snack"]:checked' },
-      dessert: { selector: 'input[name="dessert"]:checked' },
-      drink:   { selector: 'input[name="drink"]:checked' },
+    // ===== Синхронизация меню <-> селекты формы =====
+    // Соответствие категорий
+    const catMap = {
+      hot:     { select: document.getElementById('sel-hot')     },
+      snack:   { select: document.getElementById('sel-snack')   },
+      drink:   { select: document.getElementById('sel-drink')   },
+      dessert: { select: document.getElementById('sel-dessert') }
     };
 
-    function recalc(){
-      let sum = 0;
-      Object.keys(cats).forEach(cat=>{
-        const checked = document.querySelectorAll(cats[cat].selector);
-        const list = document.querySelector(`#sum-${cat} .summary-list`);
-        list.innerHTML = '';
-        if (checked.length === 0) {
-          list.innerHTML = '<li class="empty">— не выбрано</li>';
-        } else {
-          checked.forEach(el=>{
-            const price = Number(el.dataset.price || 0);
-            sum += price;
-            const li = document.createElement('li');
-            li.innerHTML = `${el.value} — <span class="price-highlight">${money(price)}</span>`;
-            list.appendChild(li);
-          });
-        }
+    // Наполнить селекты опциями из карточек
+    Object.keys(catMap).forEach(name => {
+      const select = catMap[name].select;
+      const cards = [...document.querySelectorAll(`input[name="${name}"]`)];
+      catMap[name].inputs = cards;
+      cards.forEach(input => {
+        const title = input.value;
+        const price = Number(input.dataset.price || 0);
+        const opt = document.createElement('option');
+        opt.value = title;
+        opt.textContent = `${title} — ${price} ₽`;
+        select.appendChild(opt);
       });
-      document.getElementById('order-total').textContent = money(sum);
-      document.getElementById('summary-total').textContent = money(sum);
-    }
 
-    document.addEventListener('change', e=>{
-      if (e.target.matches('input[type="checkbox"], input[type="radio"]')) recalc();
+      // Изменение в селекте: ставим галочку только у выбранного
+      select.addEventListener('change', () => {
+        cards.forEach(i => { i.checked = (i.value === select.value && select.value !== ""); });
+      });
+
+      // Клик по карточке: подставляем значение в селект (и снимаем прочие)
+      cards.forEach(i => {
+        i.addEventListener('change', () => {
+          if (i.checked) {
+            select.value = i.value;
+            // снимаем остальные чекбоксы этой категории
+            cards.forEach(j => { if (j !== i) j.checked = false; });
+          } else {
+            // если сняли — сбросим селект на плейсхолдер, если нет других отмеченных
+            const anyChecked = cards.some(j => j.checked);
+            if (!anyChecked) select.value = "";
+          }
+        });
+      });
     });
-    window.addEventListener('DOMContentLoaded', recalc);
   </script>
 </body>
 </html>
