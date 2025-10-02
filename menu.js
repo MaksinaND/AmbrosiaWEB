@@ -1,18 +1,15 @@
 (function () {
 
-  const DISHES = (window.DISHES || []).slice(); // массив блюд, подключённый отдельным файлом
-  const collator = new Intl.Collator('ru', { sensitivity: 'base' }); // сортировка по-русски (А=а, Ё=Е и т.д.)
+  const DISHES = (window.DISHES || []).slice(); //берём массив блюд, что подключили отдельным файлом
+  const collator = new Intl.Collator('ru', { sensitivity: 'base' }); //чтобы сортировать по-русски (А=а, Ё=Е и т.д.)
 
-  // Справочник по категориям: где рисовать карточки и какие скрытые поля заполнять для формы
+  // Справочник по категориям: где рисовать карточки и куда складывать выбранные значения для формы
   const CATS = {
     hot:     { title: 'Горячее', grid: document.getElementById('grid-hot'),     hidden: document.getElementById('hidden-hot'),     hiddenQty: mkHidden('hidden-hot-qty')     },
     snack:   { title: 'Закуски', grid: document.getElementById('grid-snack'),   hidden: document.getElementById('hidden-snack'),   hiddenQty: mkHidden('hidden-snack-qty')   },
     dessert: { title: 'Десерт',  grid: document.getElementById('grid-dessert'), hidden: document.getElementById('hidden-dessert'), hiddenQty: mkHidden('hidden-dessert-qty') },
     drink:   { title: 'Напитки', grid: document.getElementById('grid-drink'),   hidden: document.getElementById('hidden-drink'),   hiddenQty: mkHidden('hidden-drink-qty')   },
   };
-
-  // Словарь для подписи внизу карточки
-  const metaLabelByCat = { hot: 'Горячее', snack: 'Закуска', dessert: 'Десерт', drink: 'Напиток' };
 
   // если вдруг нет скрытого input — создаём и кладём в форму
   function mkHidden(id){
@@ -54,15 +51,50 @@
   DISHES.forEach(d => { if (CATS[d.category]) byCat[d.category].push(d); });
   Object.keys(byCat).forEach(cat => byCat[cat].sort((a,b)=>collator.compare(a.name, b.name)));
 
-  // рисуем карточки по категориям
-  Object.keys(byCat).forEach(cat => {
-    const grid = CATS[cat].grid; // контейнер-сетка для этой категории
-    const frag = document.createDocumentFragment(); // рисуем во фрагмент, чтобы не дёргать DOM по сто раз
+  // ===== НОВОЕ: фильтры по подкатегориям =====
+  // Кнопки для каждой категории (человекочитаемые подписи)
+  const FILTERS = {
+    hot:     [{key:'meat', label:'Мясное'}, {key:'veg', label:'Вегетарианское'}],
+    snack:   [{key:'light', label:'Лёгкое'}, {key:'veg', label:'Вегетарианское'}],
+    dessert: [{key:'small', label:'Маленькая порция'}, {key:'medium', label:'Средняя порция'}],
+    drink:   [{key:'hotdrink', label:'Горячие'}, {key:'colddrink', label:'Холодные'}],
+  };
+  // текущее активное состояние фильтров
+  const activeFilter = { hot:null, snack:null, dessert:null, drink:null };
 
-    byCat[cat].forEach(dish => {
+  // рендерим кнопки фильтров для категории
+  function renderFilters(cat) {
+    const wrap = document.querySelector(`[data-filters="${cat}"]`);
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    (FILTERS[cat] || []).forEach(f => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'filter-btn' + (activeFilter[cat] === f.key ? ' active' : '');
+      btn.textContent = f.label;
+      btn.dataset.kind = f.key;
+      btn.addEventListener('click', () => {
+        activeFilter[cat] = (activeFilter[cat] === f.key) ? null : f.key; // toggle
+        renderCategory(cat); // перерисовать только эту категорию
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  // ===== Рисуем карточки по категориям с учётом фильтра =====
+  function renderCategory(cat) {
+    renderFilters(cat); // сперва нарисовать кнопки фильтров
+
+    const grid = CATS[cat].grid; // контейнер-сеточка для этой категории
+    const frag = document.createDocumentFragment();
+
+    // берём блюда, подходящие под фильтр
+    const items = byCat[cat].filter(d => !activeFilter[cat] || d.kind === activeFilter[cat]);
+
+    items.forEach(dish => {
       const card = document.createElement('div');
       card.className = 'plate-card';
-      card.setAttribute('data-dish', dish.keyword); // data-атрибут с латинским ключом блюда
+      card.setAttribute('data-dish', dish.keyword);// data-атрибут с латинским ключом блюда
 
       // «галочка» в левом верхнем углу — просто визуальный чекбокс
       const cb = document.createElement('input');
@@ -82,8 +114,10 @@
       info.className = 'plate-info';
       info.innerHTML = `
         <p class="plate-title">${dish.name}</p>
-        ${dish.desc ? `<p class="plate-desc">${dish.desc}</p>` : ''}
-        <p class="plate-meta">${dish.count ? dish.count + ' · ' : ''}${metaLabelByCat[dish.category] || 'Блюдо'}</p>
+        <p class="plate-desc">${dish.desc || ''}</p>
+        <p class="plate-meta">
+          ${dish.count ? dish.count + ' · ' : ''}${CATS[cat].title}
+        </p>
         <p class="plate-price">${dish.price} ₽</p>
       `;
 
@@ -129,11 +163,20 @@
           showQtyControls(card, false);
         }
       });
+
+      // восстановим состояние, если блюдо уже выбрано
+      const st = selected[cat];
+      if (st.keyword === dish.keyword && st.qty > 0) {
+        cb.checked = true;
+        qtyWrap.style.display = 'flex';
+        btn.style.display = 'none';
+        qtyWrap.querySelector('.qty-num').textContent = st.qty;
+      }
     });
 
     grid.innerHTML = ''; 
     grid.appendChild(frag); // за один проход вставили все карточки
-  });
+  }
 
   // показать/спрятать у карточки панель количества и чекбокс-подсветку
   function showQtyControls(card, on){
@@ -254,7 +297,9 @@
     }, 0);
   });
 
-  // первичная отрисовка блока «Ваш заказ» и суммы при загрузке
+  // первичная отрисовка всех категорий и суммы
+  Object.keys(byCat).forEach(cat => renderCategory(cat));
   renderSummary();
   renderTotal();
+
 })();

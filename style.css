@@ -327,3 +327,38 @@ body.lunch-bg header, body.lunch-bg main, body.lunch-bg footer { position: relat
 #summary .summary-list .empty { opacity: .9; list-style: disc; }
 #summary .summary-total { display:flex; justify-content: space-between; align-items:center; font-size:1.1rem; }
 .price-highlight { color: #ffd54f; font-weight: 700; }
+
+
+/* ---------- Фильтры категорий ---------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 12px 0 20px;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  border: 2px solid var(--brand-accent-2);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--brand-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .1s ease;
+}
+
+.filter-btn:hover {
+  background: var(--brand-accent-2);
+  color: var(--text-light);
+  transform: translateY(-1px);
+}
+
+.filter-btn.active {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: var(--text-light);
+  box-shadow: 0 3px 6px rgba(0,0,0,.2);
+}
