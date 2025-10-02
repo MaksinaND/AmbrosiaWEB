@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
   <title>Собрать трапезу — Ambrosia</title>
 </head>
 <body class="lunch-bg">
@@ -19,125 +19,35 @@
       <a href="https://www.example.com/?page=about">Свиток заказов</a>
       <a href="#contacts">Контакты Олимпа</a>
       <a href="login.html" class="loginlink">
-        <img src="login.png" alt="Войти" class="loginpic">
+        <img src="login.png" alt="Войти" class="loginpic" />
       </a>
     </nav>
   </header>
 
   <main class="max">
-    <!-- МЕНЮ -->
-    <section class="menu-section">
+    <!-- ПУСТЫЕ секции, JS сам нарисует карточки -->
+    <section class="menu-section" data-cat="hot">
       <h3>Горячее</h3>
-      <div class="menu-grid">
-        <label class="plate-card">
-          <input type="checkbox" name="hot" value="Нить Ариадны" data-price="285">
-          <img src="ariadna.jpg" alt="Нить Ариадны" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Нить Ариадны</p>
-            <p class="plate-desc">Паста в нежном томатно-сливочном соусе</p>
-            <p class="plate-price">285 ₽</p>
-          </div>
-        </label>
-
-        <label class="plate-card">
-          <input type="checkbox" name="hot" value="Амброзия" data-price="330">
-          <img src="ambrosia.jpg" alt="Амброзия" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Амброзия</p>
-            <p class="plate-desc">Сочное мясо с гарниром</p>
-            <p class="plate-price">330 ₽</p>
-          </div>
-        </label>
-
-        <label class="plate-card">
-          <input type="checkbox" name="hot" value="Щит Ареса" data-price="320">
-          <img src="ares.jpg" alt="Щит Ареса" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Щит Ареса</p>
-            <p class="plate-desc">Сытная запеканка из мяса и овощей</p>
-            <p class="plate-price">320 ₽</p>
-          </div>
-        </label>
-      </div>
+      <div class="menu-grid" id="grid-hot"></div>
     </section>
 
-    <section class="menu-section">
+    <section class="menu-section" data-cat="snack">
       <h3>Закуски</h3>
-      <div class="menu-grid">
-        <label class="plate-card">
-          <input type="checkbox" name="snack" value="Чары Афродиты" data-price="250">
-          <img src="afrodita.jpg" alt="Чары Афродиты" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Чары Афродиты</p>
-            <p class="plate-desc">Лёгкий салат с овощами и сыром</p>
-            <p class="plate-price">250 ₽</p>
-          </div>
-        </label>
-
-        <label class="plate-card">
-          <input type="checkbox" name="snack" value="Слёзы Геры" data-price="240">
-          <img src="geratears.jpg" alt="Слёзы Геры" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Слёзы Геры</p>
-            <p class="plate-desc">Нежное пюре с кремовой текстурой</p>
-            <p class="plate-price">240 ₽</p>
-          </div>
-        </label>
-      </div>
+      <div class="menu-grid" id="grid-snack"></div>
     </section>
 
-    <section class="menu-section">
+    <section class="menu-section" data-cat="dessert">
       <h3>Десерт</h3>
-      <div class="menu-grid">
-        <label class="plate-card">
-          <input type="checkbox" name="dessert" value="Нектар Диониса" data-price="230">
-          <img src="dionis.jpg" alt="Нектар Диониса" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Нектар Диониса</p>
-            <p class="plate-desc">Ароматное печенье с орехами</p>
-            <p class="plate-price">230 ₽</p>
-          </div>
-        </label>
-
-        <label class="plate-card">
-          <input type="checkbox" name="dessert" value="Сон Морфея" data-price="200">
-          <img src="morpheus.jpg" alt="Сон Морфея" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Сон Морфея</p>
-            <p class="plate-desc">Мягкий десерт с нежным вкусом</p>
-            <p class="plate-price">200 ₽</p>
-          </div>
-        </label>
-      </div>
+      <div class="menu-grid" id="grid-dessert"></div>
     </section>
 
-    <section class="menu-section">
+    <section class="menu-section" data-cat="drink">
       <h3>Напитки</h3>
-      <div class="menu-grid">
-        <label class="plate-card">
-          <input type="checkbox" name="drink" value="Кубок Прометея" data-price="150">
-          <img src="prometheus.jpg" alt="Кубок Прометея" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Кубок Прометея</p>
-            <p class="plate-desc">Бодрящий кофе с лёгкой кислинкой</p>
-            <p class="plate-price">150 ₽</p>
-          </div>
-        </label>
-
-        <label class="plate-card">
-          <input type="checkbox" name="drink" value="Река Стикс" data-price="120">
-          <img src="styx.jpg" alt="Река Стикс" class="plate-img">
-          <div class="plate-info">
-            <p class="plate-title">Река Стикс</p>
-            <p class="plate-desc">Прохладительный ягодный напиток</p>
-            <p class="plate-price">120 ₽</p>
-          </div>
-        </label>
-      </div>
+      <div class="menu-grid" id="grid-drink"></div>
     </section>
 
-    <!-- ФОРМА -->
-    <section class="checkout">
+    <!-- ФОРМА + блок "Ваш заказ" -->
+    <section class="checkout" id="order">
       <h2 class="checkout-title">Сделать заказ</h2>
 
       <form class="checkout-grid"
@@ -146,72 +56,65 @@
             autocomplete="on"
             accept-charset="UTF-8">
 
-        <!-- ЛЕВАЯ КОЛОНКА — привязанные к меню селекты -->
+        <!-- ЛЕВАЯ КОЛОНКА — ВАШ ЗАКАЗ (заполняется скриптом) -->
+        <aside class="card" id="summary">
+          <h4>Ваш заказ</h4>
+
+          <div class="summary-block" data-sum="hot">
+            <p class="summary-cat"><strong>Горячее</strong></p>
+            <ul class="summary-list"><li class="empty">Блюдо не выбрано</li></ul>
+          </div>
+
+          <div class="summary-block" data-sum="snack">
+            <p class="summary-cat"><strong>Закуски</strong></p>
+            <ul class="summary-list"><li class="empty">Блюдо не выбрано</li></ul>
+          </div>
+
+          <div class="summary-block" data-sum="dessert">
+            <p class="summary-cat"><strong>Десерт</strong></p>
+            <ul class="summary-list"><li class="empty">Блюдо не выбрано</li></ul>
+          </div>
+
+          <div class="summary-block" data-sum="drink">
+            <p class="summary-cat"><strong>Напитки</strong></p>
+            <ul class="summary-list"><li class="empty">Блюдо не выбрано</li></ul>
+          </div>
+
+          <hr style="opacity:.3;border:none;border-top:1px solid rgba(255,255,255,.3)" />
+          <div class="summary-total">
+            <span>Стоимость заказа</span>
+            <strong id="summary-total">0 ₽</strong>
+          </div>
+        </aside>
+
+        <!-- ПРАВАЯ КОЛОНКА — ДАННЫЕ КЛИЕНТА -->
         <fieldset class="card">
-          <h4 style="margin:0 0 10px;color:var(--brand-accent)">Ваш заказ</h4>
-
-          <label>
-            Горячее
-            <select id="sel-hot" name="hot" required>
-              <option value="" selected>-- Выберите горячее --</option>
-            </select>
-          </label>
-
-          <label>
-            Закуски
-            <select id="sel-snack" name="snack" required>
-              <option value="" selected>-- Выберите закуску --</option>
-            </select>
-          </label>
-
-          <label>
-            Напитки
-            <select id="sel-drink" name="drink" required>
-              <option value="" selected>-- Выберите напиток --</option>
-            </select>
-          </label>
-
-          <label>
-            Десерт
-            <select id="sel-dessert" name="dessert" required>
-              <option value="" selected>-- Выберите десерт --</option>
-            </select>
-          </label>
-
-          <label>
-            Комментарии к заказу
-            <textarea name="comment" rows="4" placeholder="Пожелания по времени, без лука и т. п."></textarea>
-          </label>
-        </fieldset>
-
-        <!-- ПРАВАЯ КОЛОНКА — данные -->
-        <fieldset class="card">
-          <h4 style="margin:0 0 10px;color:var(--brand-accent)">Ваши данные</h4>
+          <h4>Ваши данные</h4>
 
           <label>
             Имя
-            <input type="text" name="username" required>
+            <input type="text" name="username" required />
           </label>
 
           <label>
             Email
-            <input type="email" name="email" placeholder="email@example.com">
+            <input type="email" name="email" placeholder="email@example.com" />
           </label>
 
           <label class="remember">
-            <input type="checkbox" name="subscribe" value="yes">
+            <input type="checkbox" name="subscribe" value="yes" />
             Получать информацию о скидках и акциях
           </label>
 
           <label>
             Номер телефона
             <input type="tel" name="phone" placeholder="+7 xxx xxx-xx-xx"
-                   pattern="^\+?7\s?\d{3}\s?\d{3}-?\d{2}-?\d{2}$" required>
+                   pattern="^\+?7\s?\d{3}\s?\d{3}-?\d{2}-?\d{2}$" required />
           </label>
 
           <label>
             Адрес доставки
-            <input type="text" name="address" placeholder="Улица, дом, квартира">
+            <input type="text" name="address" placeholder="Улица, дом, квартира" />
           </label>
 
           <p class="delivery-note" style="margin:0 0 8px;opacity:.9">
@@ -220,13 +123,13 @@
 
           <fieldset>
             <legend>Время доставки:</legend>
-            <label><input type="radio" name="when" value="asap" checked> Как можно скорее</label>
-            <label><input type="radio" name="when" value="scheduled"> К указанному времени</label>
+            <label><input type="radio" name="when" value="asap" checked /> Как можно скорее</label>
+            <label><input type="radio" name="when" value="scheduled" /> К указанному времени</label>
           </fieldset>
 
           <label>
             Укажите время доставки
-            <input id="deliver_at" type="time" name="deliver_at" min="07:00" max="23:00" step="300" disabled>
+            <input id="deliver_at" type="time" name="deliver_at" min="07:00" max="23:00" step="300" disabled />
           </label>
           <p style="margin:4px 0 0;opacity:.85">Доступное время доставки с 7:00 до 23:00</p>
 
@@ -234,6 +137,12 @@
             <button type="reset">Сбросить</button>
             <button type="submit">Отправить</button>
           </div>
+
+          <!-- СЮДА скрипт положит keywords выбранных блюд -->
+          <input type="hidden" name="hot" id="hidden-hot" />
+          <input type="hidden" name="snack" id="hidden-snack" />
+          <input type="hidden" name="dessert" id="hidden-dessert" />
+          <input type="hidden" name="drink" id="hidden-drink" />
         </fieldset>
       </form>
     </section>
@@ -247,56 +156,7 @@
     </div>
   </footer>
 
-  <script>
-    // Поле времени: активно только при "К указанному времени"
-    const radios = document.querySelectorAll('input[name="when"]');
-    const timeInput = document.getElementById('deliver_at');
-    function toggleTime(){ timeInput.disabled = !document.querySelector('input[name="when"][value="scheduled"]').checked; }
-    radios.forEach(r => r.addEventListener('change', toggleTime)); toggleTime();
-
-    // ===== Синхронизация меню <-> селекты формы =====
-    // Соответствие категорий
-    const catMap = {
-      hot:     { select: document.getElementById('sel-hot')     },
-      snack:   { select: document.getElementById('sel-snack')   },
-      drink:   { select: document.getElementById('sel-drink')   },
-      dessert: { select: document.getElementById('sel-dessert') }
-    };
-
-    // Наполнить селекты опциями из карточек
-    Object.keys(catMap).forEach(name => {
-      const select = catMap[name].select;
-      const cards = [...document.querySelectorAll(`input[name="${name}"]`)];
-      catMap[name].inputs = cards;
-      cards.forEach(input => {
-        const title = input.value;
-        const price = Number(input.dataset.price || 0);
-        const opt = document.createElement('option');
-        opt.value = title;
-        opt.textContent = `${title} — ${price} ₽`;
-        select.appendChild(opt);
-      });
-
-      // Изменение в селекте: ставим галочку только у выбранного
-      select.addEventListener('change', () => {
-        cards.forEach(i => { i.checked = (i.value === select.value && select.value !== ""); });
-      });
-
-      // Клик по карточке: подставляем значение в селект (и снимаем прочие)
-      cards.forEach(i => {
-        i.addEventListener('change', () => {
-          if (i.checked) {
-            select.value = i.value;
-            // снимаем остальные чекбоксы этой категории
-            cards.forEach(j => { if (j !== i) j.checked = false; });
-          } else {
-            // если сняли — сбросим селект на плейсхолдер, если нет других отмеченных
-            const anyChecked = cards.some(j => j.checked);
-            if (!anyChecked) select.value = "";
-          }
-        });
-      });
-    });
-  </script>
+  <script src="dishes.js"></script>
+  <script src="menu.js"></script>
 </body>
 </html>
