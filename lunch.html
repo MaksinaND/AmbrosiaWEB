@@ -25,36 +25,134 @@
   </header>
 
   <main class="max">
-    <!-- ПУСТЫЕ секции, JS сам нарисует карточки -->
+    <!-- ===== ВЕРХНИЙ БЛОК С ИКОНКАМИ КОМБО ===== -->
+    <section class="combo-nav" aria-label="Типы комбо">
+      <!-- строгое комбо: горячее+напиток -->
+      <button class="combo-chip" data-plan="hot+drink" title="Горячее + Напиток">
+        <img src="combo-hot-drink.png" alt="Горячее + Напиток">
+        <span>Горячее + Напиток</span>
+      </button>
+
+      <!-- строгое комбо: закуска+напиток -->
+      <button class="combo-chip" data-plan="snack+drink" title="Закуска + Напиток">
+        <img src="combo-snack-drink.png" alt="Закуска + Напиток">
+        <span>Закуска + Напиток</span>
+      </button>
+
+      <!-- строгое комбо: горячее+закуска+напиток -->
+      <button class="combo-chip" data-plan="hot+snack+drink" title="Горячее + Закуска + Напиток">
+        <img src="combo-full.png" alt="Горячее + Закуска + Напиток">
+        <span>Полный комбо</span>
+      </button>
+
+      <!-- переход к готовым наборам внизу -->
+      <a class="combo-chip" href="#combo-sets" title="Готовые комбо">
+        <img src="combo-done.png" alt="Готовые комбо">
+        <span>Готовые комбо</span>
+      </a>
+    </section>
+
+    <!-- Пояснение под «шариками» -->
+    <p class="combo-note">
+      Можно выбрать комбо выше — или собирать блюда по отдельности.<br>
+      Десерт можно добавить к <strong>любому</strong> заказу.
+    </p>
+
+    <!-- панель-гид для строгого режима -->
+    <div id="combo-guide" aria-live="polite" hidden></div>
+
+    <!-- ===== КАТЕГОРИИ. Карточки рисуются JS ===== -->
     <section class="menu-section" data-cat="hot">
       <h3>Горячее</h3>
-      <!-- КНОПКИ-ФИЛЬТРЫ ДЛЯ ГОРЯЧЕГО (JS подставит мясное/вегетарианское и т.п.) -->
       <div class="filters" data-filters="hot"></div>
       <div class="menu-grid" id="grid-hot"></div>
     </section>
 
     <section class="menu-section" data-cat="snack">
       <h3>Закуски</h3>
-      <!-- КНОПКИ-ФИЛЬТРЫ ДЛЯ ЗАКУСОК -->
       <div class="filters" data-filters="snack"></div>
       <div class="menu-grid" id="grid-snack"></div>
     </section>
 
     <section class="menu-section" data-cat="dessert">
       <h3>Десерт</h3>
-      <!-- КНОПКИ-ФИЛЬТРЫ ДЛЯ ДЕСЕРТОВ -->
       <div class="filters" data-filters="dessert"></div>
       <div class="menu-grid" id="grid-dessert"></div>
     </section>
 
     <section class="menu-section" data-cat="drink">
       <h3>Напитки</h3>
-      <!-- КНОПКИ-ФИЛЬТРЫ ДЛЯ НАПИТКОВ -->
       <div class="filters" data-filters="drink"></div>
       <div class="menu-grid" id="grid-drink"></div>
     </section>
 
-    <!-- ФОРМА + блок "Ваш заказ" -->
+<!-- ===== Готовые комбо ===== -->
+<section class="menu-section" id="combo-sets">
+  <h3>Готовые комбо</h3>
+
+  <div class="ready-combos">
+    <!--  Зевс -->
+    <article class="ready-combo-card" data-key="zeus">
+      <img src="combo_zevs.png" alt="Трапеза Зевса">
+      <div class="ready-combo-info">
+        <h4> Трапеза Зевса</h4>
+        <p>Сытный сет с горячим блюдом, гарниром и кофе.</p>
+
+        <div class="combo-controls">
+          <button type="button" class="minus">−</button>
+          <span class="combo-qty">0</span>
+          <button type="button" class="plus">+</button>
+        </div>
+
+        <button type="button" class="btn-primary add-ready-combo" data-key="zeus">
+          Выберите количество
+        </button>
+      </div>
+    </article>
+
+    <!--  Афродита -->
+    <article class="ready-combo-card" data-key="aphrodite">
+      <img src="combo_afrodita.png" alt="Лёгкость Афродиты">
+      <div class="ready-combo-info">
+        <h4> Лёгкость Афродиты</h4>
+        <p>Свежий сет: салат, десерт и прохладный напиток.</p>
+
+        <div class="combo-controls">
+          <button type="button" class="minus">−</button>
+          <span class="combo-qty">0</span>
+          <button type="button" class="plus">+</button>
+        </div>
+
+        <button type="button" class="btn-primary add-ready-combo" data-key="aphrodite">
+          Выберите количество
+        </button>
+      </div>
+    </article>
+
+    <!--  Гефест -->
+    <article class="ready-combo-card" data-key="hephaestus">
+      <img src="combo_gefest.png" alt="Завтрак Гефеста">
+      <div class="ready-combo-info">
+        <h4> Завтрак Гефеста</h4>
+        <p>Горячая паста и крепкий кофе — для продуктивного старта.</p>
+
+        <div class="combo-controls">
+          <button type="button" class="minus">−</button>
+          <span class="combo-qty">0</span>
+          <button type="button" class="plus">+</button>
+        </div>
+
+        <button type="button" class="btn-primary add-ready-combo" data-key="hephaestus">
+          Выберите количество
+        </button>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+    <!-- ===== ФОРМА + блок "Ваш заказ" ===== -->
     <section class="checkout" id="order">
       <h2 class="checkout-title">Сделать заказ</h2>
 
@@ -64,7 +162,7 @@
             autocomplete="on"
             accept-charset="UTF-8">
 
-        <!-- ЛЕВАЯ КОЛОНКА — ВАШ ЗАКАЗ (заполняется скриптом) -->
+        <!-- ЛЕВАЯ КОЛОНКА — ВАШ ЗАКАЗ -->
         <aside class="card" id="summary">
           <h4>Ваш заказ</h4>
 
@@ -137,7 +235,7 @@
 
           <label>
             Укажите время доставки
-            <input id="deliver_at" type="time" name="deliver_at" min="07:00" max="23:00" step="300" disabled />
+            <input id="deliver_at" type="time" name="deliver_at" min="07:00" max="23:00" step="60" disabled />
           </label>
           <p style="margin:4px 0 0;opacity:.85">Доступное время доставки с 7:00 до 23:00</p>
 
@@ -146,7 +244,7 @@
             <button type="submit">Отправить</button>
           </div>
 
-          <!-- СЮДА скрипт положит keywords выбранных блюд -->
+          <!-- Скрытые поля с выбранными блюдами -->
           <input type="hidden" name="hot" id="hidden-hot" />
           <input type="hidden" name="snack" id="hidden-snack" />
           <input type="hidden" name="dessert" id="hidden-dessert" />
