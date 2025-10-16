@@ -1,7 +1,7 @@
-// Категории: 'hot' | 'snack' | 'dessert' | 'drink'
+// Категории: 'hot' | 'snack' | 'dessert' | 'drink' | 'combo'
 // image — относительный путь к картинке
 // count — масса/объем (строка)
-// kind — подкатегория (для фильтрации в лабе 4: мясное/вегетарианское, холодное/горячее и т.д.)
+// kind — подкатегория (для фильтрации: мясное/вегетарианское, горячие/холодные и т.д.)
 
 window.DISHES = [
   { keyword: 'ariadna', name: 'Нить Ариадны', price: 285, category: 'hot', count: '300 г', image: 'ariadna.jpg',
@@ -14,7 +14,7 @@ window.DISHES = [
     desc: 'Сытная запеканка из мяса и овощей', kind: 'meat' }, // мясное
 
   { keyword: 'aphrodite_charm', name: 'Чары Афродиты', price: 250, category: 'snack', count: '250 г', image: 'afrodita.jpg',
-    desc: 'Свежий салат с нежной заправкой', kind: 'light' }, // лёгкое
+    desc: 'Свежий салат с нежной заправкой', kind: 'veg' }, // вегетарианское
 
   { keyword: 'hera_tears', name: 'Слёзы Геры', price: 240, category: 'snack', count: '220 г', image: 'geratears.jpg',
     desc: 'Картофельное пюре с зеленью', kind: 'veg' }, // вегетарианское
@@ -30,4 +30,14 @@ window.DISHES = [
 
   { keyword: 'styx_river', name: 'Река Стикс', price: 120, category: 'drink', count: '300 мл', image: 'styx.jpg',
     desc: 'Прохладительный ягодный напиток', kind: 'colddrink' }, // холодный напиток
+
+  // --- Готовые комбо как отдельные карточки каталога ---
+  { keyword: 'combo_zevs', name: 'Трапеза Зевса', price: 675, category: 'combo', count: 'набор',
+    image: 'combo_zevs.png', desc: 'Амброзия + Слёзы Геры + Кубок Прометея' },
+
+  { keyword: 'combo_afrodita', name: 'Лёгкость Афродиты', price: 570, category: 'combo', count: 'набор',
+    image: 'combo_afrodita.png', desc: 'Чары Афродиты + Сон Морфея + Река Стикс' },
+
+  { keyword: 'combo_gefest', name: 'Завтрак Гефеста', price: 435, category: 'combo', count: 'набор',
+    image: 'combo_gefest.png', desc: 'Нить Ариадны + Кубок Прометея' }
 ];

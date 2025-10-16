@@ -1,4 +1,3 @@
-
 (function () {
   const DISHES = (window.DISHES || []).slice();
   const collator = new Intl.Collator('ru', { sensitivity: 'base' });
@@ -18,17 +17,25 @@
 
   // ---- refs ----
   const CATS = {
-    hot:     { title: 'Горячее', grid: byId('grid-hot'),     hidden: byId('hidden-hot'),     hiddenQty: ensureHidden('hidden-hot-qty')     },
-    snack:   { title: 'Закуски', grid: byId('grid-snack'),   hidden: byId('hidden-snack'),   hiddenQty: ensureHidden('hidden-snack-qty')   },
-    dessert: { title: 'Десерт',  grid: byId('grid-dessert'), hidden: byId('hidden-dessert'), hiddenQty: ensureHidden('hidden-dessert-qty') },
-    drink:   { title: 'Напитки', grid: byId('grid-drink'),   hidden: byId('hidden-drink'),   hiddenQty: ensureHidden('hidden-drink-qty')   },
+    hot:     { title: 'Горячее',        grid: byId('grid-hot'),     hidden: byId('hidden-hot'),     hiddenQty: ensureHidden('hidden-hot-qty')     },
+    snack:   { title: 'Закуски',        grid: byId('grid-snack'),   hidden: byId('hidden-snack'),   hiddenQty: ensureHidden('hidden-snack-qty')   },
+    dessert: { title: 'Десерт',         grid: byId('grid-dessert'), hidden: byId('hidden-dessert'), hiddenQty: ensureHidden('hidden-dessert-qty') },
+    drink:   { title: 'Напитки',        grid: byId('grid-drink'),   hidden: byId('hidden-drink'),   hiddenQty: ensureHidden('hidden-drink-qty')   },
+    combo:   { title: 'Готовые комбо',  grid: byId('grid-combo'),   hidden: byId('hidden-combo'),   hiddenQty: ensureHidden('hidden-combo-qty')  }
   };
   const hiddenCombos = ensureHidden('hidden-combos'); // JSON с комбо
 
   // ---- state ----
   // обычный заказ (как и раньше)
-  const selected = { hot:{keyword:null,qty:0}, snack:{keyword:null,qty:0}, dessert:{keyword:null,qty:0}, drink:{keyword:null,qty:0} };
-  // список добавленных комбо
+  const selected = {
+    hot:     { keyword: null, qty: 0 },
+    snack:   { keyword: null, qty: 0 },
+    dessert: { keyword: null, qty: 0 },
+    drink:   { keyword: null, qty: 0 },
+    combo:   { keyword: null, qty: 0 }
+  };
+
+  // список добавленных КОМБО, собранных конструктором (строгий режим)
   const combos = []; // {id, cats, title, items:[{cat,keyword,qty,name,price}], total}
   let comboSeq = 1;
 
@@ -36,7 +43,7 @@
   let planPick = null; // {hot:'k1', drink:'k2', ...}
 
   // ---- данные ----
-  const byCat = { hot:[], snack:[], dessert:[], drink:[] };
+  const byCat = { hot:[], snack:[], dessert:[], drink:[], combo:[] };
   DISHES.forEach(d => { if (byCat[d.category]) byCat[d.category].push(d); });
   Object.keys(byCat).forEach(cat => byCat[cat].sort((a,b)=>collator.compare(a.name,b.name)));
 
@@ -46,8 +53,9 @@
     snack:   [{key:'light',label:'Лёгкое'},{key:'veg',label:'Вегетарианское'}],
     dessert: [{key:'small',label:'Мал.порция'},{key:'medium',label:'Ср.порция'}],
     drink:   [{key:'hotdrink',label:'Горячие'},{key:'colddrink',label:'Холодные'}],
+    combo:   [] // у комбо нет подфильтров
   };
-  const activeFilter = { hot:null, snack:null, dessert:null, drink:null };
+  const activeFilter = { hot:null, snack:null, dessert:null, drink:null, combo:null };
 
   function renderFilters(cat){
     const wrap = document.querySelector(`[data-filters="${cat}"]`);
@@ -82,6 +90,26 @@
       btn.classList.add('active');
     });
   });
+
+// Мягкая прокрутка к секции по клику на иконку-ссылку (готовые комбо)
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.combo-chip[href^="#"]');
+  if (!link) return;
+
+  // куда ведёт ссылка
+  let id = (link.getAttribute('href') || '').slice(1);
+
+  if (id === 'combo-sets') id = 'grid-combo';
+
+  const target = document.getElementById(id) || document.querySelector(`[id="${id}"]`);
+  if (target) {
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    target.classList.add('pulse-once');
+    setTimeout(() => target.classList.remove('pulse-once'), 900);
+  }
+});
 
   function setPlan(cats, title){
     // включаем режим; отдельный контейнер для выбора в комбо
@@ -167,13 +195,15 @@
 
     const items = byCat[cat].filter(d=>!activeFilter[cat] || d.kind===activeFilter[cat]);
 
-    const enabled = !activePlan?.strict || activePlan.cats.includes(cat) || cat==='dessert';
+    // combo, как и dessert, не блокируем в строгом режиме
+    const enabled = !activePlan?.strict || activePlan.cats.includes(cat) || cat==='dessert' || cat==='combo';
     if (!enabled) grid.classList.add('disabled'); else grid.classList.remove('disabled');
 
     items.forEach(dish=>{
       const card = document.createElement('div');
       card.className='plate-card';
       card.dataset.dish=dish.keyword;
+      card.dataset.category = cat;
 
       // если этот dish выбран в текущем плане — подсветим
       if (activePlan?.strict && planPick && planPick[cat] === dish.keyword) {
@@ -248,21 +278,20 @@
     grid.innerHTML=''; grid.appendChild(frag);
   }
 
-function showQtyControls(card, on){
-  const btn = card.querySelector('.btn-primary');
-  const qty = card.querySelector('.qty');
+  function showQtyControls(card, on){
+    const btn = card.querySelector('.btn-primary');
+    const qty = card.querySelector('.qty');
 
-  if (on) {
-    card.classList.add('selected');
-    if (btn) btn.style.display = 'none';
-    if (qty) qty.style.display = 'flex';
-  } else {
-    card.classList.remove('selected');
-    if (btn) btn.style.display = 'inline-block';
-    if (qty) qty.style.display = 'none';
+    if (on) {
+      card.classList.add('selected');
+      if (btn) btn.style.display = 'none';
+      if (qty) qty.style.display = 'flex';
+    } else {
+      card.classList.remove('selected');
+      if (btn) btn.style.display = 'inline-block';
+      if (qty) qty.style.display = 'none';
+    }
   }
-}
-
 
   // ---- выбор / количество ----
   function chooseDish(cat,dish){
@@ -332,11 +361,11 @@ function showQtyControls(card, on){
     renderSummary(); renderTotal(); drawGuide();
   }
 
-  // ---- саммари и итог ----
+
   const totalEl = byId('summary-total');
 
   function renderSummary(){
-    // обычные категории
+    // обычные категории (включая combo)
     Object.keys(CATS).forEach(cat=>{
       const list=document.querySelector(`.summary-block[data-sum="${cat}"] .summary-list`);
       if (!list) return;
@@ -356,10 +385,10 @@ function showQtyControls(card, on){
       list.appendChild(li);
     });
 
-    // --- КОМБО: выводим ОДИН раз, в отдельном контейнере в блоке "Горячее" ---
+    // --- КОМБО (конструктор): выводим единым списком в блоке "Горячее" ---
     const hotBlock = document.querySelector(`.summary-block[data-sum="hot"]`);
     if (hotBlock){
-      hotBlock.querySelector('.combo-list')?.remove(); // не плодим дубли
+      hotBlock.querySelector('.combo-list')?.remove();
       if (combos.length){
         const wrap=document.createElement('div');
         wrap.className='combo-list';
@@ -424,6 +453,12 @@ function showQtyControls(card, on){
       finalizePlanAsCombo(); // превратили текущий план в отдельную позицию
     }
 
+    // если выбрано готовое КОМБО как блюдо — пропускаем остальные проверки
+    const hasReadyComboAsDish = !!selected.combo?.keyword && selected.combo.qty > 0;
+    if (hasReadyComboAsDish) {
+      return; // позволяем форме отправиться
+    }
+
     // общие правила: напиток обязателен + (горячее или закуска)
     const hasDrink = !!selected.drink.keyword || combos.some(c=>c.cats.includes('drink'));
     const hasHot   = !!selected.hot.keyword   || combos.some(c=>c.cats.includes('hot'));
@@ -455,150 +490,144 @@ function showQtyControls(card, on){
   renderSummary(); renderTotal();
 
 
-/* ===== Готовые комбо (qty=0 по умолчанию, «–» удаляет из корзины) ===== */
+  /* ===== Готовые комбо (qty=0 по умолчанию, «–» удаляет из корзины) ===== */
 
-// Поиск блюда по названию из DISHES
-function findDishByName(name) {
-  return (DISHES || []).find(d => d && d.name === name);
-}
-
-// Конфигурация наборов
-const READY_COMBOS = {
-  zeus: {
-    title: 'Комбо: Трапеза Зевса',
-    items: ['Амброзия', 'Слёзы Геры', 'Кубок Прометея'],
-    priceOverride: 675
-  },
-  aphrodite: {
-    title: 'Комбо: Лёгкость Афродиты',
-    items: ['Чары Афродиты', 'Сон Морфея', 'Река Стикс'],
-    priceOverride: 570
-  },
-  hephaestus: {
-    title: 'Комбо: Завтрак Гефеста',
-    items: ['Нить Ариадны', 'Кубок Прометея'],
-    priceOverride: 435
-  }
-};
-
-// Добавление набора в combos[]
-function addReadyComboToOrder(key, qty = 1) {
-  const cfg = READY_COMBOS[key];
-  if (!cfg || qty <= 0) return;
-
-  const items = (cfg.items || []).map(n => {
-    const d = findDishByName(n);
-    return {
-      cat: d?.category || '',
-      keyword: d?.keyword || '',
-      qty: 1,
-      name: d?.name || n,
-      price: d?.price || 0
-    };
-  });
-
-  const base = items.reduce((s, i) => s + (i.price || 0), 0);
-  const onePrice = cfg.priceOverride ?? base;
-
-  for (let i = 0; i < qty; i++) {
-    combos.push({
-      id: 'rc-' + key + '-' + Date.now() + '-' + i,
-      isReady: true,
-      cats: items.map(it => it.cat).filter(Boolean),
-      title: cfg.title,
-      items: items,
-      qty: 1,
-      total: onePrice
-    });
+  // Поиск блюда по названию из DISHES
+  function findDishByName(name) {
+    return (DISHES || []).find(d => d && d.name === name);
   }
 
-  renderSummary && renderSummary();
-  renderTotal && renderTotal();
-  showModal && showModal(`${cfg.title} добавлено в заказ`);
-}
-
-// Удаление одного такого комбо из заказа (последнего добавленного)
-function removeReadyComboFromOrder(key, count = 1) {
-  let removed = 0;
-  for (let i = combos.length - 1; i >= 0 && removed < count; i--) {
-    const c = combos[i];
-    if (c && typeof c.id === 'string' && c.id.startsWith('rc-' + key + '-')) {
-      combos.splice(i, 1);
-      removed++;
+  // Конфигурация наборов (иконки-комбо сверху)
+  const READY_COMBOS = {
+    zeus: {
+      title: 'Комбо: Трапеза Зевса',
+      items: ['Амброзия', 'Слёзы Геры', 'Кубок Прометея'],
+      priceOverride: 675
+    },
+    aphrodite: {
+      title: 'Комбо: Лёгкость Афродиты',
+      items: ['Чары Афродиты', 'Сон Морфея', 'Река Стикс'],
+      priceOverride: 570
+    },
+    hephaestus: {
+      title: 'Комбо: Завтрак Гефеста',
+      items: ['Нить Ариадны', 'Кубок Прометея'],
+      priceOverride: 435
     }
-  }
-  if (removed) {
+  };
+
+  // Добавление набора в combos[]
+  function addReadyComboToOrder(key, qty = 1) {
+    const cfg = READY_COMBOS[key];
+    if (!cfg || qty <= 0) return;
+
+    const items = (cfg.items || []).map(n => {
+      const d = findDishByName(n);
+      return {
+        cat: d?.category || '',
+        keyword: d?.keyword || '',
+        qty: 1,
+        name: d?.name || n,
+        price: d?.price || 0
+      };
+    });
+
+    const base = items.reduce((s, i) => s + (i.price || 0), 0);
+    const onePrice = cfg.priceOverride ?? base;
+
+    for (let i = 0; i < qty; i++) {
+      combos.push({
+        id: 'rc-' + key + '-' + Date.now() + '-' + i,
+        isReady: true,
+        cats: items.map(it => it.cat).filter(Boolean),
+        title: cfg.title,
+        items: items,
+        qty: 1,
+        total: onePrice
+      });
+    }
+
     renderSummary && renderSummary();
     renderTotal && renderTotal();
-    showModal && showModal('Комбо удалено из заказа');
+    showModal && showModal(`${cfg.title} добавлено в заказ`);
   }
-}
 
-// helpers для +/− и текста кнопки
-function getComboQtyFromCard(card) {
-  const span = card.querySelector('.combo-qty');
-  return Math.max(0, Math.min(9, parseInt(span?.textContent || '0', 10) || 0));
-}
-function setComboQtyInCard(card, q) {
-  const span = card.querySelector('.combo-qty');
-  if (span) span.textContent = String(Math.max(0, Math.min(9, q)));
-  updateAddButtonTotal(card);
-}
-function updateAddButtonTotal(card) {
-  const key = card.dataset.key;
-  const cfg = READY_COMBOS[key];
-  const btn = card.querySelector('.add-ready-combo');
-  if (!cfg || !btn) return;
-  const qty = getComboQtyFromCard(card);
-  if (qty === 0) {
-    btn.textContent = 'Выберите количество';
-    btn.disabled = true;
-  } else {
-    const price = (cfg.priceOverride ?? 0) * qty;
-    btn.textContent = `Добавить — ${price} ₽`;
-    btn.disabled = false;
-  }
-}
-
-// Делегирование: +, − и «Добавить»
-document.addEventListener('click', (e) => {
-  // Плюс/минус
-  const ctrl = e.target.closest('.combo-controls .plus, .combo-controls .minus');
-  if (ctrl) {
-    const card = ctrl.closest('.ready-combo-card');
-    if (card) {
-      let q = getComboQtyFromCard(card);
-      if (ctrl.classList.contains('plus')) {
-        q = Math.min(9, q + 1);
-      } else {
-        if (q > 0) {
-          q = Math.max(0, q - 1);
-        } else {
-          // при 0 — удаляем одно такое комбо из корзины
-          const key = card.dataset.key;
-          removeReadyComboFromOrder(key, 1);
-        }
+  // Удаление одного такого комбо из заказа (последнего добавленного)
+  function removeReadyComboFromOrder(key, count = 1) {
+    let removed = 0;
+    for (let i = combos.length - 1; i >= 0 && removed < count; i--) {
+      const c = combos[i];
+      if (c && typeof c.id === 'string' && c.id.startsWith('rc-' + key + '-')) {
+        combos.splice(i, 1);
+        removed++;
       }
-      setComboQtyInCard(card, q);
     }
-    return;
+    if (removed) {
+      renderSummary && renderSummary();
+      renderTotal && renderTotal();
+      showModal && showModal('Комбо удалено из заказа');
+    }
   }
 
-  // Добавить
-  const addBtn = e.target.closest('.add-ready-combo');
-  if (addBtn) {
-    const card = addBtn.closest('.ready-combo-card');
-    const key = addBtn.dataset.key || card?.dataset.key;
-    const qty = card ? getComboQtyFromCard(card) : 0;
-    addReadyComboToOrder(key, qty);
-    // после добавления — сбрасываем счётчик в 0
-    if (card) setComboQtyInCard(card, 0);
+  // helpers для +/− и текста кнопки
+  function getComboQtyFromCard(card) {
+    const span = card.querySelector('.combo-qty');
+    return Math.max(0, Math.min(9, parseInt(span?.textContent || '0', 10) || 0));
   }
-});
+  function setComboQtyInCard(card, q) {
+    const span = card.querySelector('.combo-qty');
+    if (span) span.textContent = String(Math.max(0, Math.min(9, q)));
+    updateAddButtonTotal(card);
+  }
+  function updateAddButtonTotal(card) {
+    const key = card.dataset.key;
+    const cfg = READY_COMBOS[key];
+    const btn = card.querySelector('.add-ready-combo');
+    if (!cfg || !btn) return;
+    const qty = getComboQtyFromCard(card);
+    if (qty === 0) {
+      btn.textContent = 'Выберите количество';
+      btn.disabled = true;
+    } else {
+      const price = (cfg.priceOverride ?? 0) * qty;
+      btn.textContent = `Добавить — ${price} ₽`;
+      btn.disabled = false;
+    }
+  }
 
-// Инициализация текста кнопок (qty=0)
-document.querySelectorAll('.ready-combo-card').forEach(card => {
-  setComboQtyInCard(card, getComboQtyFromCard(card)); // приведёт к «Выберите количество»
-});
+  document.addEventListener('click', (e) => {
+    const ctrl = e.target.closest('.combo-controls .plus, .combo-controls .minus');
+    if (ctrl) {
+      const card = ctrl.closest('.ready-combo-card');
+      if (card) {
+        let q = getComboQtyFromCard(card);
+        if (ctrl.classList.contains('plus')) {
+          q = Math.min(9, q + 1);
+        } else {
+          if (q > 0) {
+            q = Math.max(0, q - 1);
+          } else {
+            const key = card.dataset.key;
+            removeReadyComboFromOrder(key, 1);
+          }
+        }
+        setComboQtyInCard(card, q);
+      }
+      return;
+    }
+
+    const addBtn = e.target.closest('.add-ready-combo');
+    if (addBtn) {
+      const card = addBtn.closest('.ready-combo-card');
+      const key = addBtn.dataset.key || card?.dataset.key;
+      const qty = card ? getComboQtyFromCard(card) : 0;
+      addReadyComboToOrder(key, qty);
+      if (card) setComboQtyInCard(card, 0);
+    }
+  });
+
+  document.querySelectorAll('.ready-combo-card').forEach(card => {
+    setComboQtyInCard(card, getComboQtyFromCard(card));
+  });
 
 })();

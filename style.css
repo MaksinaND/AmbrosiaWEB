@@ -482,3 +482,5 @@ nav .loginpic { max-width: 50px; max-height: 50px; }
   transform: scale(1.05);
   background: linear-gradient(90deg, #f5ce63, #9a58c8);
 }
+
+.combo-chip { pointer-events: auto; }
