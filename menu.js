@@ -1,4 +1,27 @@
-(function () {
+(async function () {
+  /* ===== 0) ЗАГРУЗКА ДАННЫХ ИЗ API ПЕРЕД ВСЕМ ОСТАЛЬНЫМ ===== */
+  const API_URL = 'https://raw.githubusercontent.com/MaksinaND/ambrosia-data/main/dishes.json';
+  const BASE_IMG = 'https://maksinand.github.io/ambrosia-data/';
+
+  let apiData = [];
+  try {
+    const res = await fetch(API_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    // поддерживаем оба формата: [{...}] или { dishes: [...] }
+    apiData = Array.isArray(json) ? json : (json.dishes || []);
+    // делаем пути к картинкам абсолютными, если вдруг относительные
+    apiData = apiData.map(d => ({
+      ...d,
+      image: d?.image && !/^https?:\/\//i.test(d.image) ? (BASE_IMG + d.image.replace(/^\.?\/*/, '')) : d?.image
+    }));
+  } catch (e) {
+    console.warn('Не удалось загрузить блюда с API, fallback на window.DISHES', e);
+    apiData = (window.DISHES || []);
+  }
+  window.DISHES = apiData;
+
+
   const DISHES = (window.DISHES || []).slice();
   const collator = new Intl.Collator('ru', { sensitivity: 'base' });
   const byId = (id) => document.getElementById(id);
@@ -91,25 +114,25 @@
     });
   });
 
-// Мягкая прокрутка к секции по клику на иконку-ссылку (готовые комбо)
-document.addEventListener('click', (e) => {
-  const link = e.target.closest('.combo-chip[href^="#"]');
-  if (!link) return;
+  // Мягкая прокрутка к секции по клику на иконку-ссылку (готовые комбо)
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.combo-chip[href^="#"]');
+    if (!link) return;
 
-  // куда ведёт ссылка
-  let id = (link.getAttribute('href') || '').slice(1);
+    // куда ведёт ссылка
+    let id = (link.getAttribute('href') || '').slice(1);
 
-  if (id === 'combo-sets') id = 'grid-combo';
+    if (id === 'combo-sets') id = 'grid-combo';
 
-  const target = document.getElementById(id) || document.querySelector(`[id="${id}"]`);
-  if (target) {
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById(id) || document.querySelector(`[id="${id}"]`);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    target.classList.add('pulse-once');
-    setTimeout(() => target.classList.remove('pulse-once'), 900);
-  }
-});
+      target.classList.add('pulse-once');
+      setTimeout(() => target.classList.remove('pulse-once'), 900);
+    }
+  });
 
   function setPlan(cats, title){
     // включаем режим; отдельный контейнер для выбора в комбо
@@ -466,7 +489,7 @@ document.addEventListener('click', (e) => {
 
     if (!hasDrink && !hasHot && !hasSnack) { e.preventDefault(); showModal('Ничего не выбрано. Выберите блюда для заказа.'); return; }
     if (!hasDrink)                          { e.preventDefault(); showModal('Выберите напиток.'); return; }
-    if (!hasHot && !hasSnack)               { e.preventDefault(); showModal('Выберите горячее или закуску.'); return; }
+    if (!hasHot && !hasSnack)               { e.preventPreventDefault(); showModal('Выберите горячее или закуску.'); return; }
   });
 
   function showModal(message){
