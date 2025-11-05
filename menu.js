@@ -1,7 +1,8 @@
 (async function () {
   /* ===== 0) ЗАГРУЗКА ДАННЫХ ИЗ API ПЕРЕД ВСЕМ ОСТАЛЬНЫМ ===== */
-  const API_URL = 'https://raw.githubusercontent.com/MaksinaND/ambrosia-data/main/dishes.json';
-  const BASE_IMG = 'https://maksinand.github.io/ambrosia-data/';
+const API_URL = 'https://690a91d51a446bb9cc22ec28.mockapi.io/api/v1/dishes';
+const API_ORDERS = 'https://690a91d51a446bb9cc22ec28.mockapi.io/api/v1/orders';
+const BASE_IMG = 'https://maksinand.github.io/ambrosia-data/';
 
   let apiData = [];
   try {
@@ -60,6 +61,32 @@
 
   // список добавленных КОМБО, собранных конструктором (строгий режим)
   const combos = []; // {id, cats, title, items:[{cat,keyword,qty,name,price}], total}
+  // --- сохранение и восстановление выбора пользователя между перезагрузками ---
+  const LS_KEY_ITEMS  = 'ambrosia:selected';
+  const LS_KEY_COMBOS = 'ambrosia:combos';
+
+  // сохраняет текущее состояние выбранных блюд и комбо
+  function saveStateToLS() {
+    try {
+      localStorage.setItem(LS_KEY_ITEMS, JSON.stringify(selected));
+      localStorage.setItem(LS_KEY_COMBOS, JSON.stringify(combos));
+    } catch (e) {
+      console.warn('localStorage save error:', e);
+    }
+  }
+
+  // восстанавливает выбор из localStorage (если был сохранён ранее)
+  function loadStateFromLS() {
+    try {
+      const savedSel = JSON.parse(localStorage.getItem(LS_KEY_ITEMS)  || 'null');
+      const savedComb = JSON.parse(localStorage.getItem(LS_KEY_COMBOS) || 'null');
+      if (savedSel && typeof savedSel === 'object') Object.assign(selected, savedSel);
+      if (Array.isArray(savedComb)) { combos.length = 0; combos.push(...savedComb); }
+    } catch (e) {
+      console.warn('localStorage parse error:', e);
+    }
+  }
+
   let comboSeq = 1;
 
   // отдельный выбор в текущем КОМБО — НЕ влияет на selected
@@ -184,6 +211,7 @@
 
     renderSummary();
     renderTotal();
+    saveStateToLS();
     Object.keys(CATS).forEach(renderCategory);
 
     toast(`${combo.title} добавлено в заказ`);
@@ -362,6 +390,7 @@
     }
 
     renderSummary(); renderTotal(); drawGuide();
+    saveStateToLS();
   }
 
   function adjustQty(cat,dish,delta){
@@ -382,6 +411,7 @@
     }
 
     renderSummary(); renderTotal(); drawGuide();
+    saveStateToLS();
   }
 
 
@@ -461,36 +491,87 @@
       combos.length=0; hiddenCombos.value='[]';
       document.querySelectorAll('.plate-card').forEach(card=>showQtyControls(card,false));
       renderSummary(); renderTotal(); resetPlan();
+      saveStateToLS();
     },0);
   });
 
-  form?.addEventListener('submit',(e)=>{
-    // если строгий режим активен — требуем все категории плана, а затем сразу превращаем в комбо
-    if (activePlan?.strict){
-      const missing=activePlan.cats.filter(c=>!planPick || !planPick[c]);
-      if (missing.length){
-        e.preventDefault();
-        showModal('Не все блюда выбраны. Выберите: ' + missing.map(c=>CATS[c].title).join(', ') + '.');
-        return;
-      }
-      finalizePlanAsCombo(); // превратили текущий план в отдельную позицию
-    }
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault(); // перехватываем стандартное поведение формы
 
-    // если выбрано готовое КОМБО как блюдо — пропускаем остальные проверки
-    const hasReadyComboAsDish = !!selected.combo?.keyword && selected.combo.qty > 0;
-    if (hasReadyComboAsDish) {
-      return; // позволяем форме отправиться
-    }
+  const API_ORDERS = 'https://690a91d51a446bb9cc22ec28.mockapi.io/api/v1/orders';
 
-    // общие правила: напиток обязателен + (горячее или закуска)
-    const hasDrink = !!selected.drink.keyword || combos.some(c=>c.cats.includes('drink'));
-    const hasHot   = !!selected.hot.keyword   || combos.some(c=>c.cats.includes('hot'));
-    const hasSnack = !!selected.snack.keyword || combos.some(c=>c.cats.includes('snack'));
+  const hasReadyComboAsDish = !!selected.combo?.keyword && selected.combo.qty > 0;
+  const hasDrink = !!selected.drink.keyword || combos.some(c => c.cats?.includes('drink'));
+  const hasHot   = !!selected.hot.keyword   || combos.some(c => c.cats?.includes('hot'));
+  const hasSnack = !!selected.snack.keyword || combos.some(c => c.cats?.includes('snack'));
 
-    if (!hasDrink && !hasHot && !hasSnack) { e.preventDefault(); showModal('Ничего не выбрано. Выберите блюда для заказа.'); return; }
-    if (!hasDrink)                          { e.preventDefault(); showModal('Выберите напиток.'); return; }
-    if (!hasHot && !hasSnack)               { e.preventPreventDefault(); showModal('Выберите горячее или закуску.'); return; }
-  });
+  if (!hasReadyComboAsDish && (!hasDrink || (!hasHot && !hasSnack))) {
+    showModal('Пожалуйста, выберите хотя бы одно блюдо и напиток.');
+    return;
+  }
+
+  const items = Object.entries(selected)
+    .filter(([cat, v]) => v.keyword && v.qty)
+    .map(([cat, v]) => ({
+      category: cat,
+      keyword: v.keyword,
+      qty: v.qty,
+      price: DISHES.find(d => d.keyword === v.keyword)?.price || 0,
+      name: DISHES.find(d => d.keyword === v.keyword)?.name || ''
+    }));
+
+  const combosPayload = (combos || []).map(c => ({
+    title: c.title,
+    total: c.total,
+    items: (c.items || []).map(i => ({
+      category: i.cat,
+      keyword: i.keyword,
+      name: i.name,
+      price: i.price
+    }))
+  }));
+
+  const totalSum = items.reduce((s, i) => s + i.price * i.qty, 0) +
+                   combosPayload.reduce((s, c) => s + (c.total || 0), 0);
+
+  const fd = new FormData(form);
+  const payload = {
+    full_name: fd.get('username') || '',
+    email: fd.get('email') || '',
+    subscribe: fd.get('subscribe') === 'yes',
+    phone: fd.get('phone') || '',
+    address: fd.get('address') || '',
+    delivery_type: fd.get('when') === 'scheduled' ? 'scheduled' : 'asap',
+    delivery_time: fd.get('deliver_at') || '',
+    items,
+    combos: combosPayload,
+    total_sum: totalSum
+  };
+
+  try {
+    const res = await fetch(API_ORDERS, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('Ошибка HTTP: ' + res.status);
+
+    const data = await res.json();
+    showModal(`✅ Заказ оформлен! ID: ${data.id}, сумма: ${totalSum} ₽`);
+
+    // Очищаем корзину
+    form.reset();
+    Object.keys(selected).forEach(k => { selected[k] = { keyword: null, qty: 0 }; });
+    combos.length = 0;
+    saveStateToLS();
+    renderSummary();
+    renderTotal();
+  } catch (err) {
+    console.error(err);
+    showModal('❌ Не удалось отправить заказ.');
+  }
+});
 
   function showModal(message){
     const ov=document.createElement('div');
@@ -509,8 +590,10 @@
   const toast = (m)=>showModal(m);
 
   // ---- первичный рендер ----
+  loadStateFromLS(); // восстановим выбор из localStorage перед первичным рендером
   Object.keys(byCat).forEach(cat=>renderCategory(cat));
   renderSummary(); renderTotal();
+
 
 
   /* ===== Готовые комбо (qty=0 по умолчанию, «–» удаляет из корзины) ===== */
@@ -572,6 +655,7 @@
 
     renderSummary && renderSummary();
     renderTotal && renderTotal();
+    saveStateToLS();
     showModal && showModal(`${cfg.title} добавлено в заказ`);
   }
 
@@ -588,6 +672,7 @@
     if (removed) {
       renderSummary && renderSummary();
       renderTotal && renderTotal();
+      saveStateToLS();
       showModal && showModal('Комбо удалено из заказа');
     }
   }
