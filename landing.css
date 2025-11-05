@@ -1,0 +1,105 @@
+body.index-bg {
+  background: #f4e6c3;
+  font-family: 'Open Sans', sans-serif;
+  color: #2d1a08;
+  overflow-x: hidden;
+}
+
+/* Цветовые переменные */
+.text-burgundy { color: #6b1c1c; }
+.bg-burgundy { background-color: #6b1c1c; }
+.text-gold { color: #ffdf7e; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(to bottom, #fff8e1 0%, #f4e6c3 100%);
+}
+
+.hero-logo {
+  max-width: 320px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+/* FEATURE CARDS */
+.feature-card {
+  background: #fffdf5;
+  border: 2px solid #e4c58a;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.feature-card h5 {
+  color: #a67c52;
+  font-family: 'Forum', serif;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* TABLE */
+.table-gold {
+  background-color: #a67c52;
+  border-color: #a67c52;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* FOOTER */
+footer {
+  border-top: 4px double #a67c52;
+}
+
+footer .btn {
+  border-color: #ffdf7e;
+  color: #ffdf7e;
+}
+
+footer .btn:hover {
+  background-color: #ffdf7e;
+  color: #6b1c1c;
+}
+/* === ХЕДЕР === */
+.header-custom {
+  background: linear-gradient(to bottom, #fff8e1 0%, #f7e3b1 100%);
+  border-bottom: 4px double #a67c52;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* ссылки-рамочки */
+.custom-link {
+  color: #6b1c1c !important;
+  border: 2px solid #a67c52;
+  border-radius: 25px;
+  padding: 6px 18px !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background-color: #fffdf5;
+}
+
+.custom-link:hover {
+  background-color: #a67c52;
+  color: #fff !important;
+  box-shadow: 0 0 10px rgba(166, 124, 82, 0.6);
+}
+
+/* иконка входа */
+.login-icon img {
+  border-radius: 50%;
+  border: 2px solid #a67c52;
+  background-color: #fffdf5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-icon img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(166,124,82,0.8);
+}
