@@ -484,3 +484,531 @@ nav .loginpic { max-width: 50px; max-height: 50px; }
 }
 
 .combo-chip { pointer-events: auto; }
+
+
+/* ---- СВИТОК ЗАКАЗОВ ---- */
+.page-title {
+  font-family: 'Forum', serif;
+  font-size: 26px;
+  text-align: center;
+  color: #3219b3;
+  margin-top: 30px;
+}
+
+.subtitle {
+  text-align: center;
+  font-family: 'Sansation', sans-serif;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.order-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  padding: 20px;
+  width: 85%;
+  max-width: 800px;
+  font-family: 'Sansation', sans-serif;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.order-header h3 {
+  margin: 0;
+  color: #4b2a9a;
+}
+
+.order-date {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.order-body p {
+  margin: 4px 0;
+}
+
+.order-body details {
+  margin-top: 8px;
+}
+
+.order-body summary {
+  cursor: pointer;
+  color: #4b2a9a;
+  font-weight: bold;
+}
+
+.order-body ul {
+  margin-top: 6px;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.price-highlight {
+  color: #b21e1e;
+  font-weight: bold;
+}
+
+.error {
+  color: #b30000;
+  text-align: center;
+  background: rgba(255,240,240,0.9);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+
+.order-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.order-actions button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-family: 'Sansation', sans-serif;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-edit {
+  background-color: #ffe17a;
+}
+
+.btn-edit:hover {
+  background-color: #ffca28;
+}
+
+.btn-delete {
+  background-color: #ff8a80;
+}
+
+.btn-delete:hover {
+  background-color: #e53935;
+  color: white;
+}
+
+/* Модальное окно */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fffaf0;
+  border-radius: 16px;
+  padding: 20px 30px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  font-family: "Forum", serif;
+}
+
+.modal h3 {
+  color: #4b0082;
+  margin-bottom: 15px;
+}
+
+.modal label {
+  display: block;
+  margin: 8px 0;
+}
+
+.modal input {
+  width: 100%;
+  padding: 6px;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.edit-item {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.btn-remove-item {
+  background: #ffdddd;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#btn-save {
+  background: #90ee90;
+}
+
+#btn-cancel {
+  background: #dcdcdc;
+}
+
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.edit-modal {
+  background: #fffaf5;
+  color: #3b2f2f;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  font-family: "Forum", serif;
+}
+
+.edit-modal input, .edit-modal select {
+  width: 100%;
+  margin: 5px 0 10px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.items-edit { margin-top: 10px; }
+.item-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.item-row select { flex: 1; }
+.item-row input[type=number] { width: 60px; text-align: center; }
+.btn-remove-item { background: none; border: none; cursor: pointer; }
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.combo-block {
+  margin-top: 10px;
+  padding: 10px;
+  background: #fef7e5;
+  border: 1px solid #d1b45a;
+  border-radius: 8px;
+  list-style: none;
+}
+
+.combo-items {
+  margin-left: 10px;
+  margin-top: 5px;
+  font-size: 0.95em;
+}
+
+.combo-total {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #8a6b00;
+}
+
+.combo-item {
+  margin-left: 15px;
+}
+
+.price-highlight {
+  color: #b30000;
+  font-weight: bold;
+}
+
+.btn-edit {
+  background-color: #f8e08e;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: #f37c7c;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+
+
+
+/* ===== Ambrosia Modal for Editing Orders ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modal {
+  background: #fffdf9;
+  color: #2b1b1b;
+  border-radius: 16px;
+  padding: 24px 28px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  font-family: "Sansation", sans-serif;
+  position: relative;
+  animation: popIn 0.25s ease forwards;
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-family: "Forum", serif;
+  font-size: 1.5rem;
+  color: #3c2020;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: block;
+  margin: 10px 0;
+  font-size: 0.95rem;
+}
+
+.modal input[type="text"],
+.modal input[type="number"],
+.modal select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #d5c7b5;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background-color: #fdfaf6;
+}
+
+.modal input:focus, .modal select:focus {
+  outline: none;
+  border-color: #b9955b;
+  box-shadow: 0 0 0 2px rgba(185,149,91,0.25);
+}
+
+/* Кнопки */
+.btn-primary, .btn-secondary, .btn-cancel {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-primary {
+  background: #b9955b;
+  color: #fffaf3;
+  border: none;
+}
+.btn-primary:hover { background: #a98447; transform: translateY(-1px); }
+
+.btn-secondary {
+  background: #f0e7db;
+  color: #3b2b1e;
+  border: 1px solid #c7b8a0;
+}
+.btn-secondary:hover { background: #e5dac9; }
+
+.btn-cancel {
+  background: #ddd;
+  color: #3b2b1e;
+  border: none;
+}
+.btn-cancel:hover { background: #ccc; }
+
+.ok {
+  margin-top: 12px;
+  display: inline-block;
+  background: #b9955b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 16px;
+  cursor: pointer;
+}
+.ok:hover { background: #a98447; }
+
+/* Поля выбора блюд */
+.edit-item-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.edit-item-row select {
+  flex: 1;
+}
+
+.edit-item-row input[type="number"] {
+  width: 50px;
+  text-align: center;
+}
+
+.btn-delete-item {
+  background: #f8e3e3;
+  border: 1px solid #e2b3b3;
+  color: #7b2323;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.btn-delete-item:hover {
+  background: #efcece;
+}
+
+/* Комбо */
+.combo-option {
+  display: block;
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+/* Действия снизу */
+.edit-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+/* --- Модалка редактирования --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.edit-modal {
+  background: #fff8ee;
+  border-radius: 12px;
+  padding: 20px 25px;
+  width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+}
+
+.edit-modal h3 {
+  margin-top: 0;
+  font-family: 'Forum', serif;
+  color: #5a3725;
+}
+
+.edit-modal ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 10px;
+}
+
+.edit-modal li {
+  background: #fff;
+  border: 1px solid #e5d3b3;
+  margin-bottom: 5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #b33;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#saveChanges {
+  background: #7c4a21;
+  color: #fff;
+}
+
+#cancelEdit {
+  background: #ccc;
+}
